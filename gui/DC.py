@@ -19,20 +19,22 @@ def freq_cmd_cb(dev, cmd, val=None):
 freq_cmd_cb.inv = '0'
 
 def get_ctrl(dev):
-    ctrl = Data(name='ctrl', send=True, io_cb=dev_io_cb)
+    ctrl = Data(name='Settings', send=True, io_cb=dev_io_cb)
     ctrl.add('agc_en', label='AGC Enable', wdgt='radio', value=OD([('ON', '1'), ('OFF', '0')]))
     ctrl.add('agc_lvl', label='AGC Level', wdgt='spin', value=Data.spn(0, 2.5, 0.1))
-    ctrl.add('gain', label='Gain (sig)', wdgt='spin', value=Data.spn(19, 65, 0.1))
-    ctrl.add('bpf', label='BPF', wdgt='combo', state='readonly', value=OD([('11MHz', '0'), ('5.5MHz', '2'), ('250kHz', '3')]))
+    ctrl.add('bpf', label='Band Pass Filter', wdgt='combo', state='readonly', value=OD([('11MHz', '0'), ('5.5MHz', '2'), ('250kHz', '3')]))
     ctrl.add('bas', label='BAS output', wdgt='radio', value=OD([('Ch1 (sig)', '0'), ('Ch3 (br)', '1')]))
-    ctrl.add('test', label='TEST output', wdgt='combo', state='readonly', value=OD([('Synth3(1125-1140,1MHz)', '0'), ('Synth2(150,7MHz)', '1'), ('XTAL(26MHz)', '2'), ('Synth1(835-1140,1MHz)', '3')]))
+    ctrl.add('test', label='TEST output', wdgt='combo', state='readonly', value=OD([('Synth1(835-1140,1MHz)', '3'), ('Synth2(150,7MHz)', '1'), ('Synth3(1125-1140,1MHz)', '0'), ('XTAL(26MHz)', '2')]))
     ctrl.add('freq', label='Channel1 freq', wdgt='spin', value=Data.spn(975, 1000, 0.01), cmd_cb=freq_cmd_cb)
     ctrl.add('inv', label='Channel1 inv', wdgt='check', fmt_cb=inv_fmt_cb, trace_cb=inv_trace_cb)
-    ctrl.add('freqbr', label='Channel3 freq', wdgt='spin', value=Data.spn(975, 1000.1, 0.01))
-    ctrl.add('gainbr', label='Gain (br)', wdgt='spin', value=Data.spn(29.5, 77.5, 0.1))
+    ctrl.add('gain', label='Channel1 gain', wdgt='spin', value=Data.spn(19, 65, 0.1))
+    ctrl.add('freqbr', label='Channel3(br) freq', wdgt='spin', value=Data.spn(975, 1000.1, 0.01))
+    ctrl.add('gainbr', label='Channel3(br) gain', wdgt='spin', value=Data.spn(29.5, 77.5, 0.1))
     ctrl.add('thrs1', label='Threshold1', wdgt='spin', value=Data.spn(0, 200, 1))
     ctrl.add('thrs2', label='Threshold2', wdgt='spin', value=Data.spn(0, 200, 1))
-    ctrl.add('thrsb', label='Threshold (BR)', wdgt='spin', value=Data.spn(0, 10, 0.1))
+    ctrl.add('thrsb', label='Threshold (br)', wdgt='spin', value=Data.spn(0, 10, 0.1))
+    ctrl.add_page('System')
+    ctrl.add('commit', label='EFC commit enable', wdgt='combo', state='readonly', value=['ON', 'OFF'], text='ON')
     return ctrl
 
 def get_mntr(dev):

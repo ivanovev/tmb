@@ -95,9 +95,9 @@ def DC_freqbr(ip_addr='192.168.0.1', freqbr=''):
     @return частота в МГц от 975.00 до 1000.10 (шаг 0.01)
     '''
     if freqbr:
-        return telnet(ip_addr, 'sc_frbr', freqbr)
+        return telnet(ip_addr, 'sc_freqbr', freqbr)
     else:
-        return telnet(ip_addr, 'sm_frbr')
+        return telnet(ip_addr, 'sm_freqbr')
 
 def DC_gainbr(ip_addr='192.168.0.1', gainbr=''):
     '''
@@ -143,9 +143,9 @@ def DC_thrsb(ip_addr='192.168.0.1', thrsb=''):
     @return значение порога 0...10В
     '''
     if thrsb:
-        return telnet(ip_addr, 'ac_thrb', thrsb)
+        return telnet(ip_addr, 'ac_thrsb', thrsb)
     else:
-        return telnet(ip_addr, 'am_thrb')
+        return telnet(ip_addr, 'am_thrsb')
 
 def DC_status(ip_addr='192.168.0.1'):
     '''
@@ -185,4 +185,13 @@ def DC_brl(ip_addr='192.168.0.1'):
     @return 0 .. 10 В
     '''
     return telnet(ip_addr, 'am_brl')
+
+def DC_commit(ip_addr='192.168.0.1', en=''):
+    """
+    Сохранение данных в EFC flash
+    @param en - вкл/выкл сохранение данных ("ON" или "OFF") 
+    @n пустая строка - чтение
+    @return en
+    """
+    return telnet(ip_addr, 'efc commit %s' % en)
 
