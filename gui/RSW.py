@@ -8,10 +8,12 @@ def status_fmt_cb(val, read=True, n=0):
     return '1' if val & (1 << n) else '0'
 
 def get_ctrl(dev):
-    ctrl = Data(name='ctrl', send=True, io_cb=dev_io_cb)
+    ctrl = Data(name='Settings', send=True, io_cb=dev_io_cb)
     ctrl.add('chup', label='Channel UP', wdgt='combo', state='readonly', value=OD([('Channel A', '1'), ('Channel B', '0')]))
     ctrl.add('chdn', label='Channel DOWN', wdgt='combo', state='readonly', value=OD([('Channel A', '1'), ('Channel B', '0')]))
     ctrl.add('test', label='Test signal', wdgt='combo', state='readonly', value=OD([('UC-HF', '0'), ('UC-IF', '1'), ('DC-HF', '2'), ('DC-IF', '3')]))
+    ctrl.add_page('System')
+    ctrl.add('commit', label='EFC commit enable', wdgt='combo', state='readonly', value=['ON', 'OFF'], text='ON')
     return ctrl
 
 def get_mntr(dev):

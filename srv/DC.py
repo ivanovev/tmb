@@ -193,5 +193,8 @@ def DC_commit(ip_addr='192.168.0.1', en=''):
     @n пустая строка - чтение
     @return en
     """
-    return telnet(ip_addr, 'efc commit %s' % en)
+    if en:
+        return telnet(ip_addr, 'efc commit %s' % en)
+    else:
+        return telnet(ip_addr, 'efc commit')
 

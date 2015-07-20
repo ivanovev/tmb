@@ -116,7 +116,7 @@ def RPA_i_fan(ip_addr='192.168.0.1'):
     @param ip ip-адрес устройства
     @return 0.00..2.50 А
     '''
-    return telnet(ip_addr, 'am_vent')
+    return telnet(ip_addr, 'am_fan')
 
 def RPA_t1(ip_addr='192.168.0.1'):
     '''
@@ -166,43 +166,43 @@ def RPA_fan(ip_addr='192.168.0.1', enable=''):
     @return 1 - вкл, 0 - выкл
     '''
     if enable:
-        return telnet(ip_addr, 'dc_vent %s' % enable)
+        return telnet(ip_addr, 'dc_fan %s' % enable)
     else:
-        return telnet(ip_addr, 'dm_vent')
+        return telnet(ip_addr, 'dm_fan')
 
-def RPA_fan(ip_addr='192.168.0.1', enable=''):
-    '''
-    Прочитать/записать состояние вентилятора вкл/выкл
-    @param ip ip-адрес устройства
-    @param enable - 1 - вкл, 0 - выкл
-    @return 1 - вкл, 0 - выкл
-    '''
-    if enable:
-        return telnet(ip_addr, 'dc_vent %s' % enable)
-    else:
-        return telnet(ip_addr, 'dm_vent')
-
-def RPA_thrs1(ip_addr='192.168.0.1', thrs1=''):
+def RPA_thrt1(ip_addr='192.168.0.1', thrt1=''):
     '''
     Прочитать/записать нижний порог температуры усилителя (по достижении температуры ниже порога вентилятор автоматически выключается)
     @param ip - ip-адрес устройства
-    @param thrs1 - нижний порог температуры усилителя
+    @param thrt1 - нижний порог температуры усилителя
     @return 0..+100.0 С
     '''
-    if thrs1:
-        return telnet(ip_addr, 'dc_thrt1 %s' % thrs1)
+    if thrt1:
+        return telnet(ip_addr, 'ac_thrt1 %s' % thrt1)
     else:
-        return telnet(ip_addr, 'dm_thrt1')
+        return telnet(ip_addr, 'am_thrt1')
 
-def RPA_thrs2(ip_addr='192.168.0.1', thrs2=''):
+def RPA_thrt2(ip_addr='192.168.0.1', thrt2=''):
     '''
     Прочитать/записать верхний порог температуры усилителя (по достижении температуры ниже порога вентилятор автоматически выключается)
     @param ip - ip-адрес устройства
-    @param thrs2 - нижний порог температуры усилителя
+    @param thrt2 - нижний порог температуры усилителя
     @return 0..+100.0 С
     '''
-    if thrs2:
-        return telnet(ip_addr, 'dc_thrt2 %s' % thrs2)
+    if thrt2:
+        return telnet(ip_addr, 'ac_thrt2 %s' % thrt2)
     else:
-        return telnet(ip_addr, 'dm_thrt2')
+        return telnet(ip_addr, 'am_thrt2')
+
+def RPA_commit(ip_addr='192.168.0.1', en=''):
+    """
+    Сохранение данных в EFC flash
+    @param en - вкл/выкл сохранение данных ("ON" или "OFF") 
+    @n пустая строка - чтение
+    @return en
+    """
+    if en:
+        return telnet(ip_addr, 'efc commit %s' % en)
+    else:
+        return telnet(ip_addr, 'efc commit')
 

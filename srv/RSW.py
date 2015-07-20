@@ -81,3 +81,15 @@ def RSW_11v(ip_addr='192.168.0.1'):
     '''
     return telnet(ip_addr, 'am_11v')
 
+def RSW_commit(ip_addr='192.168.0.1', en=''):
+    """
+    Сохранение данных в EFC flash
+    @param en - вкл/выкл сохранение данных ("ON" или "OFF") 
+    @n пустая строка - чтение
+    @return en
+    """
+    if en:
+        return telnet(ip_addr, 'efc commit %s' % en)
+    else:
+        return telnet(ip_addr, 'efc commit')
+

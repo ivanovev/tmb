@@ -5,8 +5,10 @@ from util import Data, alarm_trace_cb, dev_io_cb
 from .RSW import status_fmt_cb
 
 def get_ctrl(dev):
-    ctrl = Data(name='ctrl', send=True, io_cb=dev_io_cb)
+    ctrl = Data(name='Settings', send=True, io_cb=dev_io_cb)
     ctrl.add('channel', label='Channel selection', wdgt='radio', value=OD([('Channel A', '1'), ('Channel B', '0')]))
+    ctrl.add_page('System')
+    ctrl.add('commit', label='EFC commit enable', wdgt='combo', state='readonly', value=['ON', 'OFF'], text='ON')
     return ctrl
 
 def get_mntr(dev):
@@ -31,3 +33,4 @@ def get_mntr(dev):
 
 def get_menu(dev):
     return OD([('Control', control_cb), ('Monitor', monitor_cb)])
+

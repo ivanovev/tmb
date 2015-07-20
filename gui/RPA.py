@@ -5,12 +5,14 @@ from util import Data, alarm_trace_cb, dev_io_cb
 from .RSW import status_fmt_cb
 
 def get_ctrl(dev):
-    ctrl = Data(name='ctrl', send=True, io_cb=dev_io_cb)
+    ctrl = Data(name='Settings', send=True, io_cb=dev_io_cb)
     ctrl.add('channel', label='Channel selection', wdgt='radio', value=OD([('Channel A', '1'), ('Channel B', '0')]))
     ctrl.add('tx', label='TX enable', wdgt='radio', value=OD([('ON', '1'), ('OFF', '0')]))
     ctrl.add('fan', label='FAN enable', wdgt='radio', value=OD([('ON', '1'), ('OFF', '0')]))
-    ctrl.add('thrs1', label='Threshold1, C', wdgt='spin', value=Data.spn(0, 100, 1))
-    ctrl.add('thrs2', label='Threshold2, C', wdgt='spin', value=Data.spn(0, 100, 1))
+    ctrl.add('thrt1', label='Threshold1, C', wdgt='spin', value=Data.spn(0, 100, 1))
+    ctrl.add('thrt2', label='Threshold2, C', wdgt='spin', value=Data.spn(0, 100, 1))
+    ctrl.add_page('System')
+    ctrl.add('commit', label='EFC commit enable', wdgt='combo', state='readonly', value=['ON', 'OFF'], text='ON')
     return ctrl
 
 def get_mntr(dev):
@@ -39,10 +41,10 @@ def get_mntr(dev):
     mntr.add('28v2', wdgt='entry', label='28V2', state='readonly', msg='PA2 input voltage, V')
     mntr.add('26v', wdgt='entry', label='26V', state='readonly', msg='AD-DC? output, V')
     mntr.add('i_fan', wdgt='entry', label='Ifan', state='readonly', msg='Fan current, A')
-    mntr.add('i1', wdgt='entry', label='I1', state='readonly', msg='PA1 current, A')
-    mntr.add('i2', wdgt='entry', label='I2', state='readonly', msg='PA2 current, A')
-    mntr.add('t1', wdgt='entry', label='12V2', state='readonly', msg='PA1 temperature')
-    mntr.add('t2', wdgt='entry', label='5_5V', state='readonly', msg='PA2 temperature')
+    mntr.add('i1', wdgt='entry', label='I(PA1)', state='readonly', msg='PA1 current, A')
+    mntr.add('i2', wdgt='entry', label='I(PA2)', state='readonly', msg='PA2 current, A')
+    mntr.add('t1', wdgt='entry', label='T(PA1)', state='readonly', msg='PA1 temperature, C')
+    mntr.add('t2', wdgt='entry', label='T(PA2)', state='readonly', msg='PA2 temperature, C')
     return mntr
 
 def get_menu(dev):
