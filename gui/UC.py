@@ -1,9 +1,8 @@
 
 from collections import OrderedDict as OD
-from util.mainwnd import control_cb, monitor_cb
-from util import Data, alarm_trace_cb, dev_io_cb
-from .RSW import status_fmt_cb
+from util import Data, control_cb, monitor_cb, alarm_trace_cb, dev_io_cb
 from .DC import inv_fmt_cb, inv_trace_cb, freq_cmd_cb
+from .RSW import status_fmt_cb
 
 def get_ctrl(dev):
     ctrl = Data(name='ctrl', send=True, io_cb=dev_io_cb)
